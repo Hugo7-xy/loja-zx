@@ -2,7 +2,7 @@
 
 // --- 1. CONFIGURAÇÃO DO FIREBASE ---
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API,
+  apiKey: import.meta.env.FIREBASE_API,
   authDomain: import.meta.env.VITE_FIREBASE_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
@@ -38,4 +38,5 @@ async function main() {
 }
 
 document.addEventListener('DOMContentLoaded', main);
+
 
