@@ -12,6 +12,9 @@ let sellerDashboardModal;
 
 /**
  * Atualiza a interface do usuário com base no estado de autenticação.
+ * @param {object|null} user - O objeto do usuário do Firebase.
+ * @param {boolean} isSeller - Se o usuário é um vendedor.
+ * @param {boolean} isAdmin - Se o usuário é um administrador.
  */
 function updateUserUI(user, isSeller, isAdmin) {
     if (user) {
@@ -26,6 +29,7 @@ function updateUserUI(user, isSeller, isAdmin) {
             goToDashboardBtn.classList.add('hidden');
         }
     } else {
+        // Visão de usuário deslogado
         loggedOutView.classList.remove('hidden');
         loggedInView.classList.add('hidden');
         userDisplayName.textContent = '';
@@ -37,7 +41,7 @@ function updateUserUI(user, isSeller, isAdmin) {
  * Função principal que será exportada.
  */
 export function initAuth() {
-    // Seleção de elementos do DOM
+    // Seleção de elementos do DOM (feita aqui para garantir que o HTML foi carregado)
     openMenuBtn = document.getElementById('open-menu-btn');
     closeMenuBtn = document.getElementById('close-menu-btn');
     sidePanel = document.getElementById('user-side-panel');
@@ -64,12 +68,13 @@ export function initAuth() {
         closePanel();
         setTimeout(() => {
             sellerDashboardModal.classList.remove('hidden');
-        }, 300);
+        }, 300); // Pequeno delay para a animação do painel lateral terminar
     });
 
-    // --- LÓGICA DE AUTENTICAÇÃO ATUALIZADA ---
+    // --- LÓGICA DE AUTENTICAÇÃO E PERMISSÕES ---
     auth.onAuthStateChanged(async user => {
         if (user) {
+            // Se o usuário está logado, verificamos suas permissões
             const adminDoc = await firestore.collection('admins').doc(user.uid).get();
             const sellerDoc = await firestore.collection('sellers').doc(user.uid).get();
             const isAdmin = adminDoc.exists;
@@ -87,11 +92,12 @@ export function initAuth() {
                 initSystemVendedor(user, sellerDoc.data(), false); // false = visão normal
             }
         } else {
+            // Se o usuário está deslogado
             updateUserUI(null, false, false);
         }
     });
 
-    // --- Ações de Login/Logout (sem alterações) ---
+    // --- Ações de Login/Logout ---
     googleLoginBtn.addEventListener('click', async () => {
         const provider = new firebase.auth.GoogleAuthProvider();
         try {
@@ -110,7 +116,7 @@ export function initAuth() {
             await auth.signInWithEmailAndPassword(email, password);
             closePanel();
         } catch (error) {
-            console.error("Erro no login com e-mail/senha:", error.message);
+            console.error("Erro no login com e-mail/senha:", error);
             alert("Falha no login. Verifique seu e-mail e senha.");
         }
     });
