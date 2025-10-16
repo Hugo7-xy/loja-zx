@@ -10,8 +10,6 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-// ADICIONE ESTA LINHA PARA VERIFICAR AS CHAVES
-console.log("CONFIGURAÇÃO ATUAL DO FIREBASE:", firebaseConfig);
 
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
@@ -42,6 +40,7 @@ async function main() {
 }
 
 document.addEventListener('DOMContentLoaded', main);
+
 
 
 
