@@ -401,3 +401,50 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
     }
 }
 
+/* ========================================================================== */
+/* --- UI: MODAL DE CONFIRMAÇÃO --- */
+/* ========================================================================== */
+
+.confirm-dialog {
+    max-width: 400px; /* Um modal menor, para confirmações rápidas */
+}
+
+.confirm-dialog p {
+    text-align: center;
+    color: #f3d999;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn-confirm {
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.btn-cancel {
+    background-color: #8b6c43;
+    color: #fff;
+}
+.btn-cancel:hover {
+    background-color: #9d794c;
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Vermelho para ações destrutivas */
+    color: #fff;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
