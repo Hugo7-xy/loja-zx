@@ -448,3 +448,90 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .btn-danger:hover {
     background-color: #c82333;
 }
+
+/* ========================================================================== */
+/* --- DESIGN RESPONSIVO PARA MOBILE (Celulares) --- */
+/* ========================================================================== */
+
+/* Aplica estas regras para telas com largura máxima de 768px */
+@media (max-width: 768px) {
+
+    /* --- 1. AJUSTES GERAIS E CABEÇALHO --- */
+    .header-content {
+        padding: 0 1rem; /* Adiciona um respiro nas laterais */
+    }
+
+    header h1 {
+        font-size: 1.5rem; /* Diminui o tamanho do logo */
+    }
+    
+    header p {
+        display: none; /* Esconde o subtítulo no mobile para economizar espaço */
+    }
+
+    /* Oculta o menu de navegação principal, já que o menu lateral (hambúrguer) o substitui */
+    .main-nav {
+        display: none;
+    }
+
+
+    /* --- 2. LAYOUT DA PÁGINA DE PRODUTOS --- */
+    
+    /* Faz o layout principal virar uma única coluna */
+    .container {
+        flex-direction: column;
+        padding: 0 0.5rem; /* Diminui o espaçamento lateral */
+        gap: 1.5rem;
+    }
+
+    /* A barra lateral de vendedores agora ocupa a largura total e não fica mais fixa */
+    .sidebar {
+        position: static;
+        width: 100%;
+        top: auto;
+    }
+
+    /* --- 3. PAINEL DO VENDEDOR (MODAL COM ABAS) --- */
+
+    /* Faz o painel de abas virar uma única coluna */
+    .modal-content-tabs {
+        flex-direction: column;
+        max-height: 90vh; /* Garante que o modal não ultrapasse a altura da tela */
+    }
+
+    /* Estiliza o menu do painel para o mobile */
+    .dashboard-menu {
+        flex-basis: auto; /* Remove a largura fixa */
+        border-right: none; /* Remove a borda lateral */
+        border-bottom: 1px solid #4e3d2c; /* Adiciona uma borda inferior */
+        padding: 1rem;
+    }
+
+    .dashboard-menu h4 {
+        text-align: center;
+        padding-bottom: 0.5rem;
+    }
+
+    /* Transforma a lista de botões em uma linha horizontal com rolagem */
+    .dashboard-menu-list {
+        display: flex;
+        overflow-x: auto; /* Permite rolar os botões para os lados se não couberem */
+        padding-bottom: 0.5rem;
+    }
+
+    .dashboard-menu-item {
+        flex-shrink: 0; /* Impede que os botões encolham */
+        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+    }
+
+    /* A área de conteúdo agora ocupa a largura total */
+    .dashboard-content {
+        padding: 1rem;
+    }
+    
+    /* Diminui o tamanho dos títulos dentro do painel */
+    .dashboard-section h2 {
+        font-size: 1.3rem;
+    }
+}
