@@ -42,24 +42,22 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .menu-btn { background: none; border: 2px solid #c8a664; color: #f3d999; font-size: 1.5rem; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; }
 .menu-btn:hover { background-color: #c8a664; color: #1b120a; }
 
-/* Navegação Principal */
-/* Bloco Corrigido e Aprimorado */
+/* Bloco Antigo */
 .main-nav {
     margin-top: 0.5rem;
     border-top: none;
-    width: 100%; /* Garante que a barra de navegação ocupe toda a largura */
+    overflow-x: auto;
+    justify-content: flex-start;
 }
 
 .nav-list {
-    width: 100%;
-    justify-content: space-around; /* Distribui os itens uniformemente */
-    padding: 0; /* Remove o padding lateral desnecessário */
+    padding: 0 1rem;
 }
 
 .nav-list li a {
-    padding: 0.5rem 0.5rem; /* Reduz o padding horizontal para dar mais espaço */
-    font-size: 0.85rem; /* Reduz um pouco a fonte para evitar quebra de linha */
-    white-space: normal; /* Permite que o texto quebre de forma controlada */
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
 }
 /* Páginas de Conteúdo */
 .container { display: flex; max-width: 1400px; margin: 2rem auto; padding: 0 1rem; gap: 2rem; position: relative; z-index: 5; align-items: flex-start; }
@@ -562,6 +560,7 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
         font-size: 1.3rem;
     }
 }
+
 
 
 
