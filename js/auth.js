@@ -4,83 +4,7 @@ import { auth, firestore } from './app.js';
 import { initSystemVendedor } from './systemvendedor.js';
 import { initSystemMestre } from './systemmestre.js';
 
-let openMenuBtn, closeMenuBtn, sidePanel, panelOverlay, loggedOutView, loggedInView;
-let googleLoginBtn, emailLoginForm, logoutBtn, userDisplayName, goToDashboardBtn;
-let sellerDashboardModal;
-
-/**
- * Atualiza a interface do usuário com base no estado de autenticação.
- * @param {object|null} user - O objeto do usuário do Firebase.
- * @param {object|null} sellerData - Os dados do perfil do vendedor do Firestore.
- * @param {boolean} isSeller - Se o usuário é um vendedor.
- * @param {boolean} isAdmin - Se o usuário é um administrador.
- */
-function updateUserUI(user, sellerData, isSeller, isAdmin) {
-    if (user) {
-        loggedOutView.classList.add('hidden');
-        loggedInView.classList.remove('hidden');
-
-        // --- MUDANÇA PRINCIPAL AQUI ---
-        // Prioriza o nome do perfil 'sellers' no Firestore.
-        // Se não existir, usa o nome da Autenticação (ex: do Google).
-        // Se nenhum existir, usa "Usuário".
-        userDisplayName.textContent = sellerData?.name || user.displayName || 'Usuário';
-        
-        if (isSeller || isAdmin) {
-            goToDashboardBtn.classList.remove('hidden');
-        } else {
-            goToDashboardBtn.classList.add('hidden');
-        }
-    } else {
-        loggedOutView.classList.remove('hidden');
-        loggedInView.classList.add('hidden');
-        userDisplayName.textContent = '';
-        goToDashboardBtn.classList.add('hidden');
-    }
-}
-
-/**
- * Função principal que será exportada.
- */
-export function initAuth() {
-    // ... (Seleção de elementos do DOM permanece a mesma) ...
-    
-    // --- LÓGICA DE AUTENTICAÇÃO E PERMISSÕES ATUALIZADA ---
-    auth.onAuthStateChanged(async user => {
-        if (user) {
-            const adminDoc = await firestore.collection('admins').doc(user.uid).get();
-            const sellerDoc = await firestore.collection('sellers').doc(user.uid).get();
-            const isAdmin = adminDoc.exists;
-            const isSeller = sellerDoc.exists;
-            const sellerData = sellerDoc.exists ? sellerDoc.data() : null;
-
-            // --- MUDANÇA PRINCIPAL AQUI ---
-            // Agora passamos os dados do vendedor (sellerData) para a função de UI.
-            updateUserUI(user, sellerData, isSeller, isAdmin);
-
-            if (isAdmin) {
-                initSystemMestre(user);
-                initSystemVendedor(user, sellerData, true);
-            } else if (isSeller) {
-                initSystemVendedor(user, sellerData, false);
-            }
-        } else {
-            updateUserUI(null, null, false, false);
-        }
-    });
-
-    // ... (Toda a outra lógica de abrir/fechar painel e botões de login/logout permanece a mesma) ...
-}
-
-
-// PARA FACILITAR, COLE O CÓDIGO 100% COMPLETO ABAIXO NO SEU auth.js
-// =======================================================================
-// CÓDIGO COMPLETO PARA COPIAR
-// =======================================================================
-import { auth, firestore } from './app.js';
-import { initSystemVendedor } from './systemvendedor.js';
-import { initSystemMestre } from './systemmestre.js';
-
+// --- Seleção de Elementos Globais do Módulo ---
 let openMenuBtn, closeMenuBtn, sidePanel, panelOverlay, loggedOutView, loggedInView;
 let googleLoginBtn, emailLoginForm, logoutBtn, userDisplayName, goToDashboardBtn;
 let sellerDashboardModal;
@@ -134,20 +58,25 @@ export function initAuth() {
 
     auth.onAuthStateChanged(async user => {
         if (user) {
-            const adminDoc = await firestore.collection('admins').doc(user.uid).get();
-            const sellerDoc = await firestore.collection('sellers').doc(user.uid).get();
-            const isAdmin = adminDoc.exists;
-            const isSeller = sellerDoc.exists;
-            const sellerData = sellerDoc.exists ? sellerDoc.data() : null;
+            try {
+                const adminDoc = await firestore.collection('admins').doc(user.uid).get();
+                const sellerDoc = await firestore.collection('sellers').doc(user.uid).get();
+                const isAdmin = adminDoc.exists;
+                const isSeller = sellerDoc.exists;
+                const sellerData = isSeller ? sellerDoc.data() : null;
 
-            updateUserUI(user, sellerData, isSeller, isAdmin);
+                updateUserUI(user, sellerData, isSeller, isAdmin);
 
-            if (isAdmin) {
-                initSystemMestre(user);
-                initSystemVendedor(user, sellerData, true);
-            } 
-            else if (isSeller) {
-                initSystemVendedor(user, sellerData, false);
+                if (isAdmin) {
+                    initSystemMestre(user);
+                    initSystemVendedor(user, sellerData, true);
+                } 
+                else if (isSeller) {
+                    initSystemVendedor(user, sellerData, false);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar dados do perfil no Firestore:", error);
+                updateUserUI(user, null, false, false);
             }
         } else {
             updateUserUI(null, null, false, false);
@@ -172,7 +101,7 @@ export function initAuth() {
             await auth.signInWithEmailAndPassword(email, password);
             closePanel();
         } catch (error) {
-            console.error("Erro no login com e-mail/senha:", error.message);
+            console.error("Erro no login com e-mail/senha:", error);
             alert("Falha no login. Verifique seu e-mail e senha.");
         }
     });
