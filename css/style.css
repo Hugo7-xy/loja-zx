@@ -369,3 +369,34 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
     text-align: center;
     justify-content: center; /* Centraliza o ícone e o texto */
 }
+
+/* ========================================================================== */
+/* --- MELHORIA MOBILE: Alinhamento do Painel de Gerenciar Vendedores --- */
+/* ========================================================================== */
+
+@media (max-width: 768px) {
+
+    /* Transforma o item da lista em um layout de coluna */
+    .vendor-product-item {
+        flex-direction: column;
+        align-items: flex-start; /* Alinha o conteúdo à esquerda */
+        gap: 0.8rem; /* Adiciona um espaçamento entre o nome e os botões */
+    }
+
+    /* Garante que a área de informações ocupe toda a largura */
+    .vendor-info {
+        width: 100%;
+    }
+
+    /* Faz a área de ações (botões) ocupar toda a largura */
+    .vendor-product-item .actions {
+        width: 100%;
+    }
+
+    /* Faz os botões dentro da área de ações se expandirem igualmente */
+    .vendor-product-item .action-btn {
+        flex-grow: 1; /* Faz com que os botões cresçam para preencher o espaço */
+        width: 50%; /* Garante que cada um ocupe metade do espaço */
+        min-width: 0; /* Remove a largura mínima que estava atrapalhando */
+    }
+}
