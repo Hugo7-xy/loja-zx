@@ -12,7 +12,7 @@ body {
     min-height: 100vh;
     background-image: 
         linear-gradient(rgba(27, 18, 10, 0.85), rgba(27, 18, 10, 0.85)),
-        url('fundo-dourado.jpg');
+        url('/fundo-dourado.jpg');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
@@ -400,3 +400,4 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
         opacity: 0;
     }
 }
+
