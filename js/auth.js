@@ -1,84 +1,35 @@
-// js/auth.js (VERSÃO COM REGISTRO DE USUÁRIO)
+// js/auth.js
 
 import { auth, firestore } from './app.js';
 import { initSystemVendedor } from './systemvendedor.js';
 import { initSystemMestre } from './systemmestre.js';
+import { showLoading, hideLoading, showToast } from './ui.js'; // Importa as novas funções de UI
 
-// ... (toda a seleção de elementos e funções updateUserUI, openPanel, closePanel continuam as mesmas)
-
-export function initAuth() {
-    // ... (toda a seleção de elementos no início da função continua a mesma)
-    const registerForm = document.getElementById('register-form');
-    const registerModal = document.getElementById('register-modal');
-
-    // ... (toda a lógica de abrir/fechar painel e botões de login/logout continua a mesma)
-
-    // ==========================================================
-    // --- NOVA LÓGICA PARA O FORMULÁRIO DE REGISTRO ---
-    // ==========================================================
-    registerForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const name = document.getElementById('register-name').value;
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        const phone = document.getElementById('register-phone').value;
-
-        try {
-            // 1. Cria o usuário no Firebase Authentication
-            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-            const user = userCredential.user;
-
-            // 2. Adiciona o nome do usuário ao perfil de autenticação
-            await user.updateProfile({
-                displayName: name
-            });
-
-            // 3. Salva as informações adicionais em uma coleção 'users' no Firestore
-            await firestore.collection('users').doc(user.uid).set({
-                name: name,
-                email: email,
-                phone: phone,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-
-            // 4. Feedback e fecha o modal
-            registerForm.reset();
-            registerModal.classList.add('hidden');
-            alert(`Bem-vindo(a), ${name}! Sua conta foi criada com sucesso.`);
-
-        } catch (error) {
-            console.error("Erro ao criar conta:", error);
-            // Mensagens de erro mais amigáveis para o usuário
-            if (error.code === 'auth/email-already-in-use') {
-                alert('Este e-mail já está cadastrado. Tente fazer login.');
-            } else if (error.code === 'auth/weak-password') {
-                alert('A senha é muito fraca. Ela deve ter no mínimo 6 caracteres.');
-            } else {
-                alert('Ocorreu um erro ao criar sua conta. Tente novamente.');
-            }
-        }
-    });
-}
-
-// ... (o resto do arquivo, como a função onAuthStateChanged e os listeners de login/logout, continua o mesmo)
-
-
-// PARA FACILITAR, COLE O CÓDIGO 100% COMPLETO ABAIXO NO SEU auth.js
-// =======================================================================
-// CÓDIGO COMPLETO PARA COPIAR
-// =======================================================================
-import { auth, firestore } from './app.js';
-import { initSystemVendedor } from './systemvendedor.js';
-import { initSystemMestre } from './systemmestre.js';
-
+// --- Seleção de Elementos Globais do Módulo ---
 let openMenuBtn, closeMenuBtn, sidePanel, panelOverlay, loggedOutView, loggedInView;
 let googleLoginBtn, emailLoginForm, logoutBtn, userDisplayName, goToDashboardBtn;
 let sellerDashboardModal;
 
-function updateUserUI(user, sellerData, isSeller, isAdmin) { if (user) { loggedOutView.classList.add('hidden'); loggedInView.classList.remove('hidden'); userDisplayName.textContent = sellerData?.name || user.displayName || 'Usuário'; if (isSeller || isAdmin) { goToDashboardBtn.classList.remove('hidden'); } else { goToDashboardBtn.classList.add('hidden'); } } else { loggedOutView.classList.remove('hidden'); loggedInView.classList.add('hidden'); userDisplayName.textContent = ''; goToDashboardBtn.classList.add('hidden'); } }
+function updateUserUI(user, sellerData, isSeller, isAdmin) {
+    if (user) {
+        loggedOutView.classList.add('hidden');
+        loggedInView.classList.remove('hidden');
+        userDisplayName.textContent = sellerData?.name || user.displayName || 'Usuário';
+        if (isSeller || isAdmin) {
+            goToDashboardBtn.classList.remove('hidden');
+        } else {
+            goToDashboardBtn.classList.add('hidden');
+        }
+    } else {
+        loggedOutView.classList.remove('hidden');
+        loggedInView.classList.add('hidden');
+        userDisplayName.textContent = '';
+        goToDashboardBtn.classList.add('hidden');
+    }
+}
 
 export function initAuth() {
+    // Seleção de elementos do DOM
     openMenuBtn = document.getElementById('open-menu-btn');
     closeMenuBtn = document.getElementById('close-menu-btn');
     sidePanel = document.getElementById('user-side-panel');
@@ -93,7 +44,8 @@ export function initAuth() {
     sellerDashboardModal = document.getElementById('seller-dashboard-modal');
     const registerForm = document.getElementById('register-form');
     const registerModal = document.getElementById('register-modal');
-
+    
+    // Lógica para abrir/fechar o painel lateral
     const openPanel = () => sidePanel.classList.add('is-open');
     const closePanel = () => sidePanel.classList.remove('is-open');
 
@@ -101,8 +53,15 @@ export function initAuth() {
     closeMenuBtn.addEventListener('click', closePanel);
     panelOverlay.addEventListener('click', closePanel);
 
-    goToDashboardBtn.addEventListener('click', (event) => { event.preventDefault(); closePanel(); setTimeout(() => { sellerDashboardModal.classList.remove('hidden'); }, 300); });
+    goToDashboardBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        closePanel();
+        setTimeout(() => {
+            sellerDashboardModal.classList.remove('hidden');
+        }, 300);
+    });
 
+    // --- LÓGICA DE AUTENTICAÇÃO E PERMISSÕES ---
     auth.onAuthStateChanged(async user => {
         if (user) {
             const adminDoc = await firestore.collection('admins').doc(user.uid).get();
@@ -111,40 +70,99 @@ export function initAuth() {
             const isSeller = sellerDoc.exists;
             const sellerData = isSeller ? sellerDoc.data() : null;
             updateUserUI(user, sellerData, isSeller, isAdmin);
-            if (isAdmin) { initSystemMestre(user); initSystemVendedor(user, sellerData, true); } 
-            else if (isSeller) { initSystemVendedor(user, sellerData, false); }
+            if (isAdmin) {
+                initSystemMestre(user);
+                initSystemVendedor(user, sellerData, true);
+            } else if (isSeller) {
+                initSystemVendedor(user, sellerData, false);
+            }
         } else {
             updateUserUI(null, null, false, false);
         }
     });
 
-    googleLoginBtn.addEventListener('click', async () => { const provider = new firebase.auth.GoogleAuthProvider(); try { await auth.signInWithPopup(provider); closePanel(); } catch (error) { console.error("Erro no login com Google:", error.message); } });
-    emailLoginForm.addEventListener('submit', async (event) => { event.preventDefault(); const email = document.getElementById('panel-login-email').value; const password = document.getElementById('panel-login-password').value; try { await auth.signInWithEmailAndPassword(email, password); closePanel(); } catch (error) { console.error("Erro no login com e-mail/senha:", error); alert("Falha no login. Verifique seu e-mail e senha."); } });
-    logoutBtn.addEventListener('click', async () => { try { await auth.signOut(); closePanel(); } catch (error) { console.error("Erro ao fazer logout:", error.message); } });
-    
+    // --- Ações de Login/Logout ---
+    googleLoginBtn.addEventListener('click', async () => {
+        showLoading();
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+            await auth.signInWithPopup(provider);
+            closePanel();
+            showToast('Login com Google bem-sucedido!', 'success');
+        } catch (error) {
+            console.error("Erro no login com Google:", error.message);
+            showToast('Falha no login com Google.', 'error');
+        } finally {
+            hideLoading();
+        }
+    });
+
+    emailLoginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        showLoading();
+        const email = document.getElementById('panel-login-email').value;
+        const password = document.getElementById('panel-login-password').value;
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            closePanel();
+            showToast('Login bem-sucedido!', 'success');
+        } catch (error) {
+            console.error("Erro no login com e-mail/senha:", error);
+            showToast('Falha no login. Verifique seu e-mail e senha.', 'error');
+        } finally {
+            hideLoading();
+        }
+    });
+
+    logoutBtn.addEventListener('click', async () => {
+        showLoading();
+        try {
+            await auth.signOut();
+            closePanel();
+            showToast('Você foi desconectado.', 'info');
+        } catch (error) {
+            console.error("Erro ao fazer logout:", error.message);
+            showToast('Erro ao desconectar.', 'error');
+        } finally {
+            hideLoading();
+        }
+    });
+
+    // --- LÓGICA DE REGISTRO ---
     registerForm.addEventListener('submit', async (event) => {
         event.preventDefault();
+        showLoading();
+
         const name = document.getElementById('register-name').value;
         const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-password').value;
         const phone = document.getElementById('register-phone').value;
+
         try {
             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
             const user = userCredential.user;
             await user.updateProfile({ displayName: name });
-            await firestore.collection('users').doc(user.uid).set({ name: name, email: email, phone: phone, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+            await firestore.collection('users').doc(user.uid).set({
+                name: name,
+                email: email,
+                phone: phone,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
             registerForm.reset();
             registerModal.classList.add('hidden');
-            alert(`Bem-vindo(a), ${name}! Sua conta foi criada com sucesso.`);
+            showToast(`Bem-vindo(a), ${name}! Conta criada com sucesso.`, 'success');
         } catch (error) {
             console.error("Erro ao criar conta:", error);
             if (error.code === 'auth/email-already-in-use') {
-                alert('Este e-mail já está cadastrado. Tente fazer login.');
+                showToast('Este e-mail já está cadastrado.', 'error');
             } else if (error.code === 'auth/weak-password') {
-                alert('A senha é muito fraca. Ela deve ter no mínimo 6 caracteres.');
+                showToast('A senha é muito fraca (mínimo 6 caracteres).', 'error');
             } else {
-                alert('Ocorreu um erro ao criar sua conta. Tente novamente.');
+                showToast('Ocorreu um erro ao criar sua conta.', 'error');
             }
+        } finally {
+            hideLoading();
         }
     });
 }
