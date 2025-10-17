@@ -43,37 +43,23 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .menu-btn:hover { background-color: #c8a664; color: #1b120a; }
 
 /* Navegação Principal */
-.main-nav { width: 100%; background-color: rgba(10, 10, 10, 0.5); border-top: 1px solid #8b6c43; display: flex; justify-content: center; }
-/* Bloco Corrigido - substitua pelo código abaixo */
-.nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: stretch; /* Garante que todos os <li> tenham a mesma altura */
+/* Bloco Corrigido e Aprimorado */
+.main-nav {
+    margin-top: 0.5rem;
+    border-top: none;
+    width: 100%; /* Garante que a barra de navegação ocupe toda a largura */
 }
 
-.nav-list li {
-    display: flex; /* Permite que o <a> dentro dele ocupe 100% da altura */
+.nav-list {
+    width: 100%;
+    justify-content: space-around; /* Distribui os itens uniformemente */
+    padding: 0; /* Remove o padding lateral desnecessário */
 }
 
 .nav-list li a {
-    display: flex;         /* Ativa o flexbox para alinhamento interno */
-    align-items: center;   /* Centraliza o texto verticalmente */
-    justify-content: center; /* Centraliza o texto horizontalmente */
-    padding: 0.8rem 1.5rem;
-    color: #f3d999;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-    text-align: center; /* Garante o alinhamento do texto caso ele quebre */
-}
-
-.nav-list li a:hover, .nav-list li a.active {
-    color: #fff5d8;
-    background-color: rgba(200, 166, 100, 0.2);
-    border-bottom-color: #c8a664;
+    padding: 0.5rem 0.5rem; /* Reduz o padding horizontal para dar mais espaço */
+    font-size: 0.85rem; /* Reduz um pouco a fonte para evitar quebra de linha */
+    white-space: normal; /* Permite que o texto quebre de forma controlada */
 }
 /* Páginas de Conteúdo */
 .container { display: flex; max-width: 1400px; margin: 2rem auto; padding: 0 1rem; gap: 2rem; position: relative; z-index: 5; align-items: flex-start; }
@@ -576,5 +562,6 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
         font-size: 1.3rem;
     }
 }
+
 
 
