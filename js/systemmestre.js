@@ -23,14 +23,17 @@ async function loadAndDisplaySellers() {
         snapshot.forEach(doc => {
             const seller = doc.data();
             sellersHTML += `
-                <div class="vendor-product-item">
-                    <p>${seller.name} <span style="color:#8b6c43; font-size: 0.8em;">(${seller.email || 'sem e-mail'})</span></p>
-                    <div class="actions">
-                        <button class="action-btn admin-manage-btn" data-uid="${doc.id}" data-name="${seller.name}">Gerenciar Produtos</button>
-                        <button class="action-btn delete-btn admin-delete-seller" data-uid="${doc.id}" data-name="${seller.name}">Remover</button>
-                    </div>
-                </div>
-            `;
+    <div class="vendor-product-item">
+        <div class="vendor-info">
+            <span class="vendor-name">${seller.name}</span>
+            <span class="vendor-email">${seller.email || 'sem e-mail'}</span>
+        </div>
+        <div class="actions">
+            <button class="action-btn admin-manage-btn" data-uid="${doc.id}" data-name="${seller.name}">Gerenciar</button>
+            <button class="action-btn delete-btn admin-delete-seller" data-uid="${doc.id}" data-name="${seller.name}">Remover</button>
+        </div>
+    </div>
+`;
         });
         adminSellerList.innerHTML = sellersHTML;
 
@@ -98,3 +101,4 @@ export function initSystemMestre(user) {
     loadAndDisplaySellers();
     setupAdminEventListeners();
 }
+
