@@ -42,54 +42,22 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .menu-btn { background: none; border: 2px solid #c8a664; color: #f3d999; font-size: 1.5rem; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; }
 .menu-btn:hover { background-color: #c8a664; color: #1b120a; }
 
-/* Bloco Antigo */
-.main-nav {
-    margin-top: 0.5rem;
-    border-top: none;
-    overflow-x: auto;
-    justify-content: flex-start;
-}
+/* Navegação Principal */
+.main-nav { width: 100%; background-color: rgba(10, 10, 10, 0.5); border-top: 1px solid #8b6c43; display: flex; justify-content: center; }
+.nav-list { list-style: none; margin: 0; padding: 0; display: flex; align-items: stretch; }
+.nav-list li { display: flex; }
+.nav-list li a { display: flex; align-items: center; justify-content: center; padding: 0.8rem 1.5rem; color: #f3d999; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border-bottom: 2px solid transparent; text-align: center; }
+.nav-list li a:hover, .nav-list li a.active { color: #fff5d8; background-color: rgba(200, 166, 100, 0.2); border-bottom-color: #c8a664; }
 
-.nav-list {
-    padding: 0 1rem;
-}
-
-.nav-list li a {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-}
 /* Páginas de Conteúdo */
 .container { display: flex; max-width: 1400px; margin: 2rem auto; padding: 0 1rem; gap: 2rem; position: relative; z-index: 5; align-items: flex-start; }
 .sidebar { flex: 0 0 250px; background: rgba(27, 18, 10, 0.85); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); height: fit-content; border: 1px solid #8b6c43; position: sticky; top: 120px; }
 .sidebar h2 { border-bottom: 2px solid #c8a664; padding-bottom: 0.5rem; margin-bottom: 1rem; color: #c8a664; }
 .supplier-filter { list-style: none; }
-/* --- CORREÇÃO VISUAL: Filtro de Vendedores com Links --- */
-.supplier-filter li {
-    margin-bottom: 0.5rem; /* Apenas o espaçamento fica no <li> */
-}
-
-.supplier-filter li a {
-    display: block; /* Faz o link preencher todo o espaço do <li> */
-    padding: 0.8rem;
-    border-radius: 5px;
-    font-weight: 600;
-    color: #f3d999; /* Remove a cor azul/roxa padrão do link */
-    text-decoration: none; /* Remove o sublinhado */
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.supplier-filter li a:hover {
-    background-color: rgba(200, 166, 100, 0.2);
-    color: #fff5d8;
-}
-
-/* Estiliza o link DENTRO do <li> que tem a classe 'active' */
-.supplier-filter li.active a {
-    background-color: #c8a664;
-    color: #1b120a;
-    box-shadow: 0 0 12px rgba(200, 166, 100, 0.7);
-}
+.supplier-filter li { margin-bottom: 0.5rem; }
+.supplier-filter li a { display: block; padding: 0.8rem; border-radius: 5px; font-weight: 600; color: #f3d999; text-decoration: none; transition: background-color 0.3s, color 0.3s; }
+.supplier-filter li a:hover { background-color: rgba(200, 166, 100, 0.2); color: #fff5d8; }
+.supplier-filter li.active a { background-color: #c8a664; color: #1b120a; box-shadow: 0 0 12px rgba(200, 166, 100, 0.7); }
 .product-grid { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
 .product-card { background: rgba(27, 18, 10, 0.85); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.5); display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; border: 1px solid #8b6c43; }
 .product-card:hover { transform: translateY(-5px); box-shadow: 0 6px 18px rgba(200, 166, 100, 0.3); }
@@ -171,7 +139,7 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .spinner { width: 50px; height: 50px; border: 5px solid #8b6c43; border-top-color: #c8a664; border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 #toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
-.toast { padding: 15px 20px; border-radius: 5px; color: #fff; font-weight: 600; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); animation: slideIn 0.3s ease forwards, fadeOut 0.5s ease 3s forwards; opacity: 0; }
+.toast { padding: 15px 20px; border-radius: 5px; color: #fff; font-weight: 600; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); animation: slideIn 0.3s ease forwards, fadeOut 0.5s ease 3s forwards; opacity: 0; min-width: 250px; text-align: center; }
 .toast.toast-success { background-color: #25D366; }
 .toast.toast-error { background-color: #dc3545; }
 .toast.toast-info { background-color: #c8a664; color: #1b120a; }
@@ -180,7 +148,7 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .confirm-dialog { max-width: 400px; }
 .confirm-dialog p { text-align: center; color: #f3d999; margin-bottom: 2rem; font-size: 1.1rem; }
 .confirm-buttons { display: flex; justify-content: center; gap: 1rem; }
-.btn-confirm { border: none; padding: 0.8rem 1.5rem; border-radius: 5px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-confirm { border: none; padding: 0.8rem 1.5rem; border-radius: 5px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-transform: uppercase; font-size: 0.9rem; }
 .btn-cancel { background-color: #8b6c43; color: #fff; }
 .btn-cancel:hover { background-color: #9d794c; }
 .btn-danger { background-color: #dc3545; color: #fff; }
@@ -197,60 +165,41 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .panel-login-btn:hover { background-color: #f3d999; }
 
 /* ========================================================================== */
-/* --- NOVO LAYOUT EM ABAS - PAINEL DO VENDEDOR/ADMIN --- */
+/* --- LAYOUT EM ABAS - PAINEL DO VENDEDOR/ADMIN --- */
 /* ========================================================================== */
 
 .modal-content-tabs {
     display: flex;
-    padding: 0;
-    max-width: 850px; 
-    overflow: hidden;
+    flex-direction: column;
+    padding: 2rem;
+    max-width: 800px;
+    width: 90%;
 }
 
-.dashboard-menu {
-    flex-basis: 250px;
-    flex-shrink: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 1.5rem;
-    border-right: 1px solid #4e3d2c;
+.dashboard-tabs-nav {
+    display: flex;
+    border-bottom: 2px solid #4e3d2c;
+    margin-bottom: 1.5rem;
 }
-.dashboard-menu h4 {
-    color: #f3d999;
-    font-size: 1.2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #4e3d2c;
-    margin-bottom: 1rem;
-}
-.dashboard-menu-list { list-style: none; }
-.dashboard-menu-item {
-    width: 100%;
+.dashboard-tab-btn {
     background: none;
     border: none;
-    color: #f3d999;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 5px;
+    color: #8b6c43;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 3px solid transparent;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
-    transition: background-color 0.2s ease;
-    text-align: left;
+    gap: 8px;
 }
-.dashboard-menu-item:hover { background-color: rgba(200, 166, 100, 0.2); }
-.dashboard-menu-item.active {
-    background-color: #c8a664;
-    color: #1b120a;
-    font-weight: 600;
-}
-.dashboard-content {
-    flex-grow: 1;
-    padding: 2rem;
-    overflow-y: auto;
-    max-height: 80vh;
-}
+.dashboard-tab-btn:hover { color: #c8a664; }
+.dashboard-tab-btn.active { color: #f3d999; border-bottom-color: #c8a664; }
+.dashboard-tabs-content { padding: 1rem 0; }
+
 .dashboard-section {
     background: none;
     border: none;
@@ -258,7 +207,6 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
     padding: 0;
     margin: 0;
 }
-
 .dashboard-section h2 {
     display: flex;
     align-items: center;
@@ -285,9 +233,7 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .dashboard-btn.add-btn:hover { background-color: #1EBE57; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
 .dashboard-btn.settings-btn, #add-reference-form button { background-color: #8b6c43; color: #fff; }
 .dashboard-btn.settings-btn:hover, #add-reference-form button:hover { background-color: #c8a664; color: #1b120a; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(200, 166, 100, 0.4); }
-.vendor-product-list {
-    margin-top: 1.5rem;
-}
+.vendor-product-list { margin-top: 1.5rem; }
 .vendor-product-item {
     display: flex;
     justify-content: space-between;
@@ -322,245 +268,25 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 #file-name-display { margin-left: 1rem; font-style: italic; color: #8b6c43; }
 
 /* ========================================================================== */
-/* --- UI: TELA DE CARREGAMENTO E NOTIFICAÇÕES (TOASTS) --- */
-/* ========================================================================== */
-
-/* Tela de Carregamento (Overlay) */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.3s ease;
-}
-
-.spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid #8b6c43; /* Cor base da sua paleta */
-    border-top-color: #c8a664; /* Cor de destaque */
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-
-/* Notificações (Toasts) */
-#toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.toast {
-    padding: 15px 20px;
-    border-radius: 5px;
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-    /* Animação: entra, espera 3s, sai */
-    animation: slideIn 0.3s ease forwards, fadeOut 0.5s ease 3s forwards;
-    opacity: 0;
-    min-width: 250px;
-    text-align: center;
-}
-
-.toast.toast-success {
-    background-color: #25D366; /* Verde sucesso */
-}
-
-.toast.toast-error {
-    background-color: #dc3545; /* Vermelho erro */
-}
-
-.toast.toast-info {
-    background-color: #c8a664; /* Dourado para informações */
-    color: #1b120a;
-}
-
-/* Animações dos Toasts */
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-/* ========================================================================== */
-/* --- UI: MODAL DE CONFIRMAÇÃO --- */
-/* ========================================================================== */
-
-.confirm-dialog {
-    max-width: 400px; /* Um modal menor, para confirmações rápidas */
-}
-
-.confirm-dialog p {
-    text-align: center;
-    color: #f3d999;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-}
-
-.confirm-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.btn-confirm {
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 5px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-}
-
-.btn-cancel {
-    background-color: #8b6c43;
-    color: #fff;
-}
-.btn-cancel:hover {
-    background-color: #9d794c;
-}
-
-.btn-danger {
-    background-color: #dc3545; /* Vermelho para ações destrutivas */
-    color: #fff;
-}
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-/* ========================================================================== */
 /* --- DESIGN RESPONSIVO PARA MOBILE (Celulares) --- */
 /* ========================================================================== */
 
-/* Aplica estas regras para telas com largura máxima de 768px */
 @media (max-width: 768px) {
+    .header-content { padding: 0 1rem; }
+    header h1 { font-size: 1.5rem; }
+    header p { display: none; }
 
-    /* --- 1. AJUSTES GERAIS E CABEÇALHO --- */
-    .header-content {
-        padding: 0 1rem; /* Adiciona um respiro nas laterais */
-    }
+    .main-nav { margin-top: 0.5rem; border-top: none; overflow-x: auto; justify-content: flex-start; }
+    .nav-list { white-space: nowrap; padding: 0 1rem; }
+    .nav-list li a { padding: 0.5rem 1rem; font-size: 0.9rem; }
 
-    header h1 {
-        font-size: 1.5rem; /* Diminui o tamanho do logo */
-    }
-    
-    header p {
-        display: none; /* Esconde o subtítulo no mobile para economizar espaço */
-    }
+    .container { flex-direction: column; padding: 0 0.5rem; gap: 1.5rem; }
+    .sidebar { position: static; width: 100%; top: auto; }
 
-    /* Ajusta o menu de navegação principal para mobile */
-.main-nav {
-    margin-top: 0.5rem; /* Diminui o espaçamento superior */
-    border-top: none; /* Remove a linha que separava do header */
-    /* Centraliza os itens do menu caso a tela seja muito pequena */
-    overflow-x: auto;
-    justify-content: flex-start; /* Alinha no começo para rolagem */
+    /* Ajustes para o painel de abas no mobile */
+    .modal-content-tabs { padding: 1rem; }
+    .dashboard-tabs-nav { overflow-x: auto; }
+    .dashboard-tab-btn { flex-shrink: 0; padding: 0.8rem 1rem; font-size: 0.9rem; }
+    .dashboard-content { padding: 1rem 0; }
+    .dashboard-section h2 { font-size: 1.3rem; }
 }
-
-.nav-list {
-    padding: 0 1rem; /* Adiciona um respiro nas laterais da lista */
-}
-
-.nav-list li a {
-    padding: 0.5rem 1rem; /* Diminui o tamanho de cada botão do menu */
-    font-size: 0.9rem; /* Diminui o texto */
-    flex-shrink: 0; /* Impede que os botões encolham */
-}
-
-
-    /* --- 2. LAYOUT DA PÁGINA DE PRODUTOS --- */
-    
-    /* Faz o layout principal virar uma única coluna */
-    .container {
-        flex-direction: column;
-        padding: 0 0.5rem; /* Diminui o espaçamento lateral */
-        gap: 1.5rem;
-    }
-
-    /* A barra lateral de vendedores agora ocupa a largura total e não fica mais fixa */
-    .sidebar {
-        position: static;
-        width: 100%;
-        top: auto;
-    }
-
-    /* --- 3. PAINEL DO VENDEDOR (MODAL COM ABAS) --- */
-
-    /* Faz o painel de abas virar uma única coluna */
-    .modal-content-tabs {
-        flex-direction: column;
-        max-height: 90vh; /* Garante que o modal não ultrapasse a altura da tela */
-    }
-
-    /* Estiliza o menu do painel para o mobile */
-    .dashboard-menu {
-        flex-basis: auto; /* Remove a largura fixa */
-        border-right: none; /* Remove a borda lateral */
-        border-bottom: 1px solid #4e3d2c; /* Adiciona uma borda inferior */
-        padding: 1rem;
-    }
-
-    .dashboard-menu h4 {
-        text-align: center;
-        padding-bottom: 0.5rem;
-    }
-
-    /* Transforma a lista de botões em uma linha horizontal com rolagem */
-    .dashboard-menu-list {
-        display: flex;
-        overflow-x: auto; /* Permite rolar os botões para os lados se não couberem */
-        padding-bottom: 0.5rem;
-    }
-
-    .dashboard-menu-item {
-        flex-shrink: 0; /* Impede que os botões encolham */
-        font-size: 0.9rem;
-        padding: 0.8rem 1rem;
-    }
-
-    /* A área de conteúdo agora ocupa a largura total */
-    .dashboard-content {
-        padding: 1rem;
-    }
-    
-    /* Diminui o tamanho dos títulos dentro do painel */
-    .dashboard-section h2 {
-        font-size: 1.3rem;
-    }
-}
-
-
-
-
