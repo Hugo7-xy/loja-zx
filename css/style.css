@@ -310,3 +310,93 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
 .file-input-label:hover { background-color: #4e3d2c; color: #fff5d8; border-color: #c8a664; }
 #file-name-display { margin-left: 1rem; font-style: italic; color: #8b6c43; }
 
+/* ========================================================================== */
+/* --- UI: TELA DE CARREGAMENTO E NOTIFICAÇÕES (TOASTS) --- */
+/* ========================================================================== */
+
+/* Tela de Carregamento (Overlay) */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #8b6c43; /* Cor base da sua paleta */
+    border-top-color: #c8a664; /* Cor de destaque */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+/* Notificações (Toasts) */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    /* Animação: entra, espera 3s, sai */
+    animation: slideIn 0.3s ease forwards, fadeOut 0.5s ease 3s forwards;
+    opacity: 0;
+    min-width: 250px;
+    text-align: center;
+}
+
+.toast.toast-success {
+    background-color: #25D366; /* Verde sucesso */
+}
+
+.toast.toast-error {
+    background-color: #dc3545; /* Vermelho erro */
+}
+
+.toast.toast-info {
+    background-color: #c8a664; /* Dourado para informações */
+    color: #1b120a;
+}
+
+/* Animações dos Toasts */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
