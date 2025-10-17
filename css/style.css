@@ -469,10 +469,24 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
         display: none; /* Esconde o subtítulo no mobile para economizar espaço */
     }
 
-    /* Oculta o menu de navegação principal, já que o menu lateral (hambúrguer) o substitui */
-    .main-nav {
-        display: none;
-    }
+    /* Ajusta o menu de navegação principal para mobile */
+.main-nav {
+    margin-top: 0.5rem; /* Diminui o espaçamento superior */
+    border-top: none; /* Remove a linha que separava do header */
+    /* Centraliza os itens do menu caso a tela seja muito pequena */
+    overflow-x: auto;
+    justify-content: flex-start; /* Alinha no começo para rolagem */
+}
+
+.nav-list {
+    padding: 0 1rem; /* Adiciona um respiro nas laterais da lista */
+}
+
+.nav-list li a {
+    padding: 0.5rem 1rem; /* Diminui o tamanho de cada botão do menu */
+    font-size: 0.9rem; /* Diminui o texto */
+    flex-shrink: 0; /* Impede que os botões encolham */
+}
 
 
     /* --- 2. LAYOUT DA PÁGINA DE PRODUTOS --- */
@@ -535,3 +549,4 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
         font-size: 1.3rem;
     }
 }
+
