@@ -290,3 +290,61 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
     .dashboard-content { padding: 1rem 0; }
     .dashboard-section h2 { font-size: 1.3rem; }
 }
+
+/* ========================================================================== */
+/* --- MELHORIA MOBILE: Menu do Painel com Estilo da Navegação Principal --- */
+/* ========================================================================== */
+
+@media (max-width: 768px) {
+
+    /* Remove o layout de duas colunas e o padding extra do modal */
+    .modal-content-tabs {
+        flex-direction: column;
+        padding: 1.5rem;
+    }
+
+    /* Transforma o menu lateral em uma barra de navegação superior */
+    .dashboard-menu {
+        flex-basis: auto;
+        border-right: none;
+        padding: 0;
+        background: none;
+        border-bottom: 1px solid #4e3d2c; /* Linha sutil abaixo do menu */
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-menu h4 {
+        display: none; /* Esconde o título "Painel" no mobile, pois o modal já tem um título */
+    }
+
+    /* Faz a lista de botões se comportar como o menu principal */
+    .dashboard-menu-list {
+        display: flex;
+        overflow-x: auto; /* Permite rolar para os lados */
+        padding-bottom: 0;
+        margin-bottom: -1px; /* Alinha a borda inferior com a borda do container */
+    }
+
+    /* Estiliza cada item do menu para parecer com o menu principal */
+    .dashboard-menu-item {
+        background: none; /* Remove o fundo do botão */
+        color: #f3d999;
+        font-weight: 600;
+        flex-shrink: 0; /* Impede que os botões encolham */
+        margin-bottom: 0;
+        padding: 0.8rem 1rem;
+        border-bottom: 3px solid transparent; /* Borda inferior transparente por padrão */
+        border-radius: 0;
+    }
+
+    /* Estilo do item de menu ativo (sublinhado) */
+    .dashboard-menu-item.active {
+        color: #fff5d8;
+        border-bottom-color: #c8a664;
+        background-color: transparent; /* Garante que não haja fundo sólido */
+    }
+
+    .dashboard-menu-item:hover {
+        background-color: rgba(200, 166, 100, 0.1); /* Efeito de hover sutil */
+    }
+}
