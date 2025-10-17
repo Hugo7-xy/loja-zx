@@ -23,7 +23,7 @@ import { initAuth } from './auth.js';
 import { initLayout } from './layout.js';
 import { initChannels } from './channels.js';
 import { initSystemProdutos } from './systemprodutos.js';
-
+import { showToast } from './ui.js';
 // --- 3. ORQUESTRAÇÃO ---
 async function main() {
     console.log("ZX Store: Iniciando módulos...");
@@ -40,6 +40,7 @@ async function main() {
 }
 
 document.addEventListener('DOMContentLoaded', main);
+
 
 
 
