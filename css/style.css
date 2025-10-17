@@ -330,3 +330,42 @@ header p { margin: 0; font-size: 0.9rem; color: #f3d999; }
     .dashboard-menu-item:hover { background-color: rgba(200, 166, 100, 0.1); }
     .dashboard-content { padding: 0; max-height: 65vh; }
 }
+
+/* ========================================================================== */
+/* --- MELHORIA VISUAL: Lista de Vendedores no Painel de Admin --- */
+/* ========================================================================== */
+
+/* Ajusta o layout principal do item da lista */
+.vendor-product-item {
+    align-items: center; /* Garante que o texto e os botões fiquem alinhados verticalmente */
+}
+
+/* Container para o nome e e-mail do vendedor */
+.vendor-info {
+    display: flex;
+    flex-direction: column; /* Coloca o nome em cima e o e-mail embaixo */
+    flex-grow: 1; /* Faz esta área ocupar o máximo de espaço possível, empurrando os botões para a direita */
+}
+
+/* Estilo para o nome do vendedor */
+.vendor-info .vendor-name {
+    font-weight: 600;
+    color: #f3d999; /* Cor principal do texto */
+    font-size: 1rem;
+}
+
+/* Estilo para o e-mail do vendedor */
+.vendor-info .vendor-email {
+    font-size: 0.8rem;
+    color: #8b6c43; /* Cor secundária, mais sutil */
+    font-style: italic;
+}
+
+/* --- Padronização dos Botões --- */
+
+/* Define uma largura mínima para todos os botões de ação no painel */
+.vendor-product-item .action-btn {
+    min-width: 120px; /* Garante que todos os botões tenham a mesma largura mínima */
+    text-align: center;
+    justify-content: center; /* Centraliza o ícone e o texto */
+}
