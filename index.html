@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZX Vendas</title>
+    <title>ZX Store - Catálogo FF</title>
     
     <link rel="stylesheet" href="/css/style.css">
     
@@ -19,7 +19,7 @@
         <div class="header-content">
             <div class="logo-area">
                 <h1>ZX Store</h1>
-                <p>As melhores contas do cenário, com os melhores preços.</p>
+                <p>As melhores contas do cenário, com os melhores fornecedores.</p>
             </div>
             <div class="header-actions">
                 <button id="open-menu-btn" class="menu-btn">
@@ -54,7 +54,7 @@
             <h1>Nossos Canais Oficiais</h1>
             <p>Entre em nossos grupos para ficar por dentro das novidades e receber as melhores ofertas.</p>
             <div class="main-channels"></div>
-            <h2>Grupos de WhatsApp </h2>
+            <h2>Grupos de WhatsApp por Franquia</h2>
             <div class="accordion"></div>
         </div>
     </section>
@@ -89,8 +89,7 @@
                     <div class="dashboard-section">
                         <h2><i class="fas fa-users-cog"></i> Gerenciar Vendedores</h2>
                         <p>Selecione um vendedor para gerenciar seus produtos ou remova-o do sistema.</p>
-                        <div id="admin-seller-list" class="vendor-product-list">
-                            </div>
+                        <div id="admin-seller-list" class="vendor-product-list"></div>
                     </div>
                 </div>
                 
@@ -185,6 +184,17 @@
             </form>
         </div>
     </div>
+    
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div class="modal-content confirm-dialog">
+            <h2 id="confirm-title">Confirmar Ação</h2>
+            <p id="confirm-message">Você tem certeza que deseja continuar?</p>
+            <div class="confirm-buttons">
+                <button id="confirm-no-btn" class="btn-confirm btn-cancel">Cancelar</button>
+                <button id="confirm-yes-btn" class="btn-confirm btn-danger">Confirmar</button>
+            </div>
+        </div>
+    </div>
 
     <aside id="user-side-panel" class="user-side-panel">
         <div class="panel-header">
@@ -212,18 +222,15 @@
     </aside>
     <div id="panel-overlay" class="panel-overlay hidden"></div>
 
+    <div id="loading-overlay" class="loading-overlay hidden"><div class="spinner"></div></div>
+    <div id="toast-container"></div>
+
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-storage-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-functions-compat.js"></script>
     
-<div id="loading-overlay" class="loading-overlay hidden"><div class="spinner"></div></div>
-    <div id="toast-container"></div>
-
     <script type="module" src="/js/app.js"></script>
 </body>
 </html>
-
-
-
